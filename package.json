@@ -17,8 +17,5 @@
 	"optionalDependencies": {},
 	"engines": {
 		"node": ">=0.8.0"
-	},
-	"publishConfig": {
-		"registry": "http://ql-1:8000/registry/_design/app/_rewrite"
 	}
 }
