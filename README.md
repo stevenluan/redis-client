@@ -32,3 +32,8 @@ or
 var Client = require('haredisclient');
 var redis_client = new Client(['localhost:6379','localhost:6380','localhost:6381']);
 ```
+
+Credits
+=====
+This module borrowed some codes from 'haredis', but removed the client faliover, and added automatical topology fetching as well
+as load balancing based on latency.
