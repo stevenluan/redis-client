@@ -14,7 +14,8 @@
 		
 	},
 	"devDependencies": {
-		"mocha":"*"
+		"mocha":"*",
+		"nodeunit":"*"
 	},
 	"optionalDependencies": {},
 	"engines": {

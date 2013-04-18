@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-var async = require('async'), _ = require('underscore'), redis = require('redis'), HAMulti = require('./lib/multi'), Node = require('./lib/node'), commands = require('redis/lib/commands'), util = require('util'), EventEmitter = require('events').EventEmitter;
+var async = require('async'), _ = require('underscore'), redis = require('redis'), HAMulti = require('./lib/multi'), RedisNode = require('./lib/node'), commands = require('redis/lib/commands'), util = require('util'), EventEmitter = require('events').EventEmitter;
 var MAX_QUEUE_SIZE = 1000000;
 var RedisClient = function(serverList, options) {
 	var self = this;
@@ -21,7 +21,7 @@ var RedisClient = function(serverList, options) {
 	serverList.forEach(function(server) {
 		self.emit('addnode', server, self);
 	});
-}
+};
 function addNode(server, self) {
 	var array = server.split(':');
 
@@ -31,7 +31,7 @@ function addNode(server, self) {
 			return;
 		}
 	}
-	var node = new Node({
+	var node = new RedisNode({
 		host : array[0],
 		port : array[1]
 	}, self.options);
@@ -40,7 +40,7 @@ function addNode(server, self) {
 	});
 	node.on('error', function(err) {
 		self.emit('error', err);
-	})
+	});
 	node.on('masterup', function() {
 		self.master = node;
 		self.ready = true;
@@ -118,7 +118,6 @@ commands.forEach(function(k) {
 			if(this.queue.length < MAX_QUEUE_SIZE){
 				this.queue.push([k, args]);
 			}
-			
 			return;
 		}
 
@@ -131,11 +130,11 @@ commands.forEach(function(k) {
 			case 'select':
 				// Need to execute on all nodes.
 				// Execute on master first in case there is a callback.
-				this.selected_db = parseInt(args[0]);
+				this.selected_db = parseInt(args[0], 10);
 				var nodes = self.nodes;
 				nodes.forEach(function(node) {
 					callCommand(node.client, k, [args[0]]);
-				})
+				});
 
 				return;
 			case 'quit':
@@ -187,14 +186,13 @@ RedisClient.prototype.drainQueue = function() {
 	}
 };
 RedisClient.prototype.bestNode = function() {
-	
 	if (this.nodes.length == 1) {
 		return this.nodes[0];
 	} else {
-		return this.nodes[_.random(this.nodes.length / 2)]
+		return this.nodes[_.random(this.nodes.length / 2)];
 	}
 
-}
+};
 
 RedisClient.prototype.getClient = function(k) {
 	if (this.slaveOk(k)) {
@@ -202,7 +200,7 @@ RedisClient.prototype.getClient = function(k) {
 	} else {
 		return this.master.client;
 	}
-}
+};
 
 RedisClient.prototype.slaveOk = function(command) {
 	if (command) {
@@ -260,4 +258,4 @@ module.exports = RedisClient;
 
 module.exports.createClient = function(serverList, options) {
 	return new RedisClient(serverList, options);
-}
+};
