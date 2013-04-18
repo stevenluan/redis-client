@@ -2,6 +2,7 @@ Redis Client with high availability
 ============
 * Compatible interface to node_redis
 * Support connection to replication set
+* Failover (backed by redis sentinel)
 * Load balancing reads
 * One client pub/sub
 
