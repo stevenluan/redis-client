@@ -1,0 +1,24 @@
+{
+	"author": "Hui Luan, <hluan@ebay.com>",
+	"name": "haredisclient",
+	"description": "Redis Clint with high availability",
+	"version": "0.0.5",
+	"repository": {
+		"type": "git",
+		"url": "https://github.scm.corp.ebay.com/connect/redis-client.git"
+	},
+	"dependencies": {
+		"async": "0.2.x",
+		"redis": "0.8.x",
+		"underscore": "1.4.x"
+		
+	},
+	"devDependencies": {},
+	"optionalDependencies": {},
+	"engines": {
+		"node": ">=0.8.0"
+	},
+	"publishConfig": {
+		"registry": "http://ql-1:8000/registry/_design/app/_rewrite"
+	}
+}

@@ -1,4 +1,2 @@
-redis-client
+Redis Client with high availability
 ============
-
-This is a redis client in nodejs
