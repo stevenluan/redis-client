@@ -5,7 +5,7 @@
 	"version": "0.0.5",
 	"repository": {
 		"type": "git",
-		"url": "https://github.scm.corp.ebay.com/connect/redis-client.git"
+		"url": "https://github.ebay.com/stevenluan/redis-client.git"
 	},
 	"dependencies": {
 		"async": "0.2.x",
